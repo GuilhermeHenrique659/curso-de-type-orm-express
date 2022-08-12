@@ -3,7 +3,7 @@ import { Product } from "../typeorm/entities/product";
 import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
 import { IRequestProducts } from "./IRequestProduct";
 
-export default class CreateProductService 
+export default class UpdateProductService 
 {
 
     private productRepository: ProductRepository

@@ -1,5 +1,5 @@
 import AppError from "@shared/errors/AppError";
-import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
+import ProductRepository from "../typeorm/repositories/ProductsRepository";
 
 export default class DeleteProductService
 {
