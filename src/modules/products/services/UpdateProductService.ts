@@ -1,6 +1,6 @@
 import AppError from "@shared/errors/AppError";
 import { Product } from "../typeorm/entities/product";
-import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
+import ProductRepository, {  } from "../typeorm/repositories/ProductsRepository";
 import { IRequestProducts } from "./IRequestProduct";
 
 export default class UpdateProductService 
@@ -15,7 +15,7 @@ export default class UpdateProductService
 
     public async execute({ id, name, price, quantity }: IRequestProducts): Promise<Product>
     {
-        let product = await this.productRepository.findOne(id);
+        let product = await this.productRepository.findOneById(id);
 
         if (!product) {
             throw new AppError ("Product not found.")

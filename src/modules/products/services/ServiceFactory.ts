@@ -1,4 +1,5 @@
-import { getCustomRepository } from "typeorm"
+import connection from "@shared/typeorm";
+import Product from "../typeorm/entities/product";
 import ProductRepository from "../typeorm/repositories/ProductsRepository"
 import CreateProductService from "./CreateProductService";
 import DeleteProductService from "./DeleteProductService";
@@ -7,7 +8,7 @@ import ListProductService from "./ListProductService"
 import ShowProductService from "./ShowProductService";
 import UpdateProductService from "./UpdateProductService";
 
-export default class ServiceFactory implements IServiceFactory{
+class ServiceFactory implements IServiceFactory{
     private repository: ProductRepository;
 
     constructor (repository: ProductRepository) 
@@ -37,7 +38,12 @@ export default class ServiceFactory implements IServiceFactory{
     }
 
 }
-const customProductRepository = ProductRepository
-const productRepository = getCustomRepository(customProductRepository);
 
-export const serviceFactory = new ServiceFactory(productRepository);
+const productRepository = new ProductRepository(
+    Product,
+    connection.createEntityManager()
+ );
+
+const serviceFactory = new ServiceFactory(productRepository);
+
+export default serviceFactory

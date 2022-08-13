@@ -13,7 +13,7 @@ export default class ShowProductService
 
     public async execute(id: string): Promise<Product>
     {
-        let product = await this.productRepository.findOne(id);
+        let product = await this.productRepository.findOneById(id);
 
         if (!product) {
             throw new AppError ("Product not found.")

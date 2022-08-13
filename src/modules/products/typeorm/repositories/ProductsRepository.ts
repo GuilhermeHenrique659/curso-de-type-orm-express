@@ -1,16 +1,24 @@
-import { EntityRepository, Repository } from "typeorm"
+import { Repository } from "typeorm"
 import { Product } from "../entities/product"
 
-@EntityRepository(Product)
 export default class ProductRepository extends Repository<Product> 
 {
-    public async findByName(name: string): Promise<Product | undefined>
+    public async findByName(name: string): Promise<Product | null>
     {
         let product = this.findOne({
             where: {
                 name,
             }
         });
+        return product;
+    }
+    public async findOneById(id: any): Promise<Product | null>
+    {
+        let product = this.findOne({
+            where: {
+                id,
+            }
+        })
         return product;
     }
 }

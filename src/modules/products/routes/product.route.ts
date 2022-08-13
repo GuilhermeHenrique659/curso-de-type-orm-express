@@ -1,8 +1,11 @@
 import ProductController from "../controllers/ProductController";
-import { serviceFactory } from "../services/ServiceFactory";
 import { Router } from "express";
+import serviceFactory from "../services/ServiceFactory";
 
+
+console.log(serviceFactory.ShowProductService().execute(1))
 const productController = new ProductController(serviceFactory);
+
 
 const productRouter = Router();
 

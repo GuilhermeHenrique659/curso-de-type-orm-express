@@ -12,7 +12,7 @@ export default class DeleteProductService
 
     public async execute(id: string): Promise<void>
     {
-        let product = await this.productRepository.findOne(id);
+        let product = await this.productRepository.findOneById(id);
 
         if (!product) {
             throw new AppError ("Product not found.")
