@@ -12,13 +12,5 @@ export default class ProductRepository extends Repository<Product>
         });
         return product;
     }
-    public async findOneById(id: any): Promise<Product | null>
-    {
-        let product = this.findOne({
-            where: {
-                id,
-            }
-        })
-        return product;
-    }
+    public async findOn
 }
