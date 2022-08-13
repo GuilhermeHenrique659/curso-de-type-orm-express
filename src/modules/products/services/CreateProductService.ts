@@ -16,15 +16,13 @@ export default class CreateProductService
     public async execute({name, price, quantity}: IRequestProducts): Promise<Product>
     {
         let productExists = await this.productRepository.findByName(name);
-
+        
         if (productExists){
             throw new AppError("Product Already exists.");
         }
-        let product = this.productRepository.create({
-            name,
-            price,
-            quantity
-        })
+
+        let product = new Product(name, price, quantity)
+        
         await this.productRepository.save(product)
 
         return product;

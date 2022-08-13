@@ -6,9 +6,9 @@ import UpdateProductService from "./UpdateProductService";
 
 export default interface IServiceFactory
 {
-    ListProductService(): ListProductService;
-    ShowProductService(): ShowProductService;
-    UpdateProductService(): UpdateProductService;
-    CreateProductService(): CreateProductService;
-    DeleteProductService(): DeleteProductService;
+    GetListProductService(): ListProductService;
+    GetShowProductService(): ShowProductService;
+    GetUpdateProductService(): UpdateProductService;
+    GetCreateProductService(): CreateProductService;
+    GetDeleteProductService(): DeleteProductService;
 }

@@ -21,4 +21,10 @@ export class Product
     @UpdateDateColumn()
     public updated_at: Date;
 
+    constructor(name:string , price: number, quantity: number, id?:string){
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.id = id
+    }
 }

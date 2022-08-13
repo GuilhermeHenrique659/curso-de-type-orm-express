@@ -1,8 +1,9 @@
 import { Product } from "@modules/products/typeorm/entities/product"
 import { DataSource } from "typeorm"
+import { CreateProducts1660307075935 } from "./migrations/1660307075935-CreateProducts"
 
 
-const connection = new DataSource({
+export const connection = new DataSource({
     type: "postgres",
     host: "localhost",
     port: 5432,
@@ -12,10 +13,7 @@ const connection = new DataSource({
     synchronize: true,
     logging: true,
     entities: [ Product ],
-    "migrations": [
-        "./src/shared/typeorm/migrations/*.ts"
+    migrations: [
+        CreateProducts1660307075935
     ],
 })
-
-console.log(connection)
-export default connection

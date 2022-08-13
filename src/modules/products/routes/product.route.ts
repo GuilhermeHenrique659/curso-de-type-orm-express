@@ -1,18 +1,18 @@
 import ProductController from "../controllers/ProductController";
+import { serviceFactory } from "../services/ServiceFactory";
 import { Router } from "express";
-import serviceFactory from "../services/ServiceFactory";
+import validate from "../validations/ProductValidation";
+import {  celebrate, Segments, Joi } from 'celebrate';
 
-
-console.log(serviceFactory.ShowProductService().execute(1))
-const productController = new ProductController(serviceFactory);
-
+const productController = new ProductController();
 
 const productRouter = Router();
 
+
 productRouter.get("/", productController.index);
-productRouter.get("/:id", productController.show);
-productRouter.post("/", productController.create);
-productRouter.put("/:id", productController.update);
-productRouter.delete("/:id", productController.delete);
+productRouter.get("/:id" , celebrate(validate.IdParansIsValid()), productController.show);
+productRouter.post("/", celebrate(validate.CreateBodyIsValid()), productController.create);
+productRouter.put("/:id", celebrate(validate.UpdateParansBodyIsValid()), productController.update);
+productRouter.delete("/:id", celebrate(validate.IdParansIsValid()), productController.delete);
 
 export default productRouter;

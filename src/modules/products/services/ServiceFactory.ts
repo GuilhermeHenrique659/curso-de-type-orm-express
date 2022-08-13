@@ -1,5 +1,4 @@
-import connection from "@shared/typeorm";
-import Product from "../typeorm/entities/product";
+import { getCustomRepository } from "typeorm"
 import ProductRepository from "../typeorm/repositories/ProductsRepository"
 import CreateProductService from "./CreateProductService";
 import DeleteProductService from "./DeleteProductService";
@@ -8,7 +7,7 @@ import ListProductService from "./ListProductService"
 import ShowProductService from "./ShowProductService";
 import UpdateProductService from "./UpdateProductService";
 
-class ServiceFactory implements IServiceFactory{
+export default class ServiceFactory implements IServiceFactory{
     private repository: ProductRepository;
 
     constructor (repository: ProductRepository) 
@@ -16,34 +15,28 @@ class ServiceFactory implements IServiceFactory{
         this.repository = repository;
     }
 
-    public ListProductService(): ListProductService 
+    public GetListProductService(): ListProductService 
     {
         return new ListProductService(this.repository);
     }
-    public ShowProductService(): ShowProductService 
+    public GetShowProductService(): ShowProductService 
     {
         return new ShowProductService(this.repository);
     }
-    public UpdateProductService(): UpdateProductService
+    public GetUpdateProductService(): UpdateProductService
     {
         return new UpdateProductService(this.repository);
     }
-    public CreateProductService(): CreateProductService
+    public GetCreateProductService(): CreateProductService
     {
         return new CreateProductService(this.repository);
     }
-    public DeleteProductService(): DeleteProductService
+    public GetDeleteProductService(): DeleteProductService
     {
         return new DeleteProductService(this.repository);
     }
 
 }
+const productRepository = new ProductRepository()
 
-const productRepository = new ProductRepository(
-    Product,
-    connection.createEntityManager()
- );
-
-const serviceFactory = new ServiceFactory(productRepository);
-
-export default serviceFactory
+export const serviceFactory = new ServiceFactory(productRepository);

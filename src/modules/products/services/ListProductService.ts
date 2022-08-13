@@ -11,7 +11,7 @@ export default class ListProductService
     }
 
     public async execute(): Promise< Array<Product> >  {
-        let productsList = this.productRepository.find();
+        let productsList = this.productRepository.findAll();
         
         return productsList;
     }
