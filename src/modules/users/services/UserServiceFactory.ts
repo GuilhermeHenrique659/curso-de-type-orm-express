@@ -2,6 +2,7 @@ import { connection } from "@shared/typeorm";
 import User from "../typeorm/entities/users";
 import IUserRepository from "../typeorm/repositories/IUserRepository";
 import UserRepository from "../typeorm/repositories/UserRepository";
+import CreateSessionService from "./CreateSessionService";
 import CreateUserService from "./CreateUserService";
 import IUserServiceFactory from "./IUserServiceFactory";
 import ListUserService from "./ListUserService";
@@ -21,6 +22,9 @@ class UserServiceFactory implements IUserServiceFactory
 
     GetListUserService(): ListUserService {
         return new ListUserService(this.repository);
+    }
+    GetCreateSessionService(): CreateSessionService {
+        return new CreateSessionService(this.repository);
     }
 }
 

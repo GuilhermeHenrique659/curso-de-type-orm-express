@@ -12,6 +12,15 @@ class UserRouterValidation
             }
         });
     }
+    public SessionCreateBodyIsValid()
+    {
+        return ({
+            [Segments.BODY]: {
+                email: Joi.string().email().required(),
+                password: Joi.string().required()
+            }
+        });
+    }
 }
 
 export const userValidate = new UserRouterValidation();

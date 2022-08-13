@@ -13,7 +13,7 @@ export default class User {
     public email: string;
 
     @Column()
-    public password?: string;
+    public password: string;
 
     @Column({nullable: true})
     public avatar?: string
@@ -24,7 +24,7 @@ export default class User {
     @UpdateDateColumn()
     public updated_at: Date;
 
-    constructor (name: string, email: string, password?: string, avatar?: string, id?: string) {
+    constructor (name: string, email: string, password: string, avatar?: string, id?: string) {
         this.name = name;
         this.email = email;
         this.password = password;

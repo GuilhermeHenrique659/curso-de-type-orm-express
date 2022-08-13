@@ -2,6 +2,6 @@ export default interface IRequestUser{
     id?: string;
     name: string;
     email: string;
-    password?: string;
+    password: string;
     avatar?: string;
 }

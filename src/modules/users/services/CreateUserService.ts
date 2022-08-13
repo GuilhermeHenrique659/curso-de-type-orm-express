@@ -25,7 +25,7 @@ export default class CreateUserService
         let user = new User(
             name, 
             email, 
-            hashedPassword
+            hashedPassword,
         )
         await this.repository.save(user);
 
