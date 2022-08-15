@@ -51,7 +51,6 @@ export default class UserRepository implements IUserRepository
                     email
                 }
         });
-        console.log(user)
         return user;
     }
 }

@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import { userServiceFactory } from "../services/UserServiceFactory";
 
-export default class ForgotPasswordController
+export default class ResetPasswordController
 {
     public async create(request: Request, response: Response): Promise<Response>
     {
-        let { email } = request.body;
+        let { password, token } = request.body;
 
-        let sendForgotPasswordEmail = userServiceFactory.GetSendForgotPasswordEmailService();
+        let ResetPasswordEmail = userServiceFactory.GetResetPasswordService();
 
-        await sendForgotPasswordEmail.execute({email});
+        await ResetPasswordEmail.execute({ token , password})
 
         return response.status(204).json()
     }

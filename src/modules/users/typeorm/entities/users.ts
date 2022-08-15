@@ -24,7 +24,7 @@ export default class User {
     @UpdateDateColumn()
     public updated_at: Date;
 
-    constructor (name: string, email: string, password: string, avatar?: string, id?: string) {
+    constructor (name: string, email: string, password: string, id?: string, avatar?: string) {
         this.name = name;
         this.email = email;
         this.password = password;

@@ -7,8 +7,6 @@ export default class UserController
     {
         let listUser = userServiceFactory.GetListUserService()
 
-        console.log(request.user.id);
-
         let users = await listUser.execute()
 
         return response.json(users);

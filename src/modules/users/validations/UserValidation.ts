@@ -29,6 +29,35 @@ class UserRouterValidation
             }
         });
     }
+    public ResetBodyIsValid()
+    {
+        return ({
+            [Segments.BODY]: {
+                token: Joi.string().uuid().required(),
+                password: Joi.string().required(),
+                password_confirm: Joi.string().required().valid(
+                    Joi.ref("password")
+                ),
+            }
+        })
+    }
+    public UploadBodyIsvalid()
+    {
+        return ({
+            [Segments.BODY]: {
+                name: Joi.string().required(),
+                email: Joi.string().email().required(),
+                old_password: Joi.string().required(),
+                password: Joi.string().optional(),
+                password_confirm: Joi.string().valid(
+                    Joi.ref("password")
+                ).when("password", {
+                    is: Joi.exist(),
+                    then: Joi.required(),
+                }),
+            }
+        })
+    }
 }
 
 export const userValidate = new UserRouterValidation();

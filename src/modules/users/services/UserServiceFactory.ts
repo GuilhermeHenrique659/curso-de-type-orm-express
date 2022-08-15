@@ -11,7 +11,9 @@ import IUserServiceFactory from "./IUserServiceFactory";
 import ListUserService from "./ListUserService";
 import ResetPasswordService from "./ResetPasswordService";
 import SendForgotPasswordEmailService from "./SendForgotPasswordEmailService";
+import ShowUserProfileService from "./ShowUserProfileService";
 import UpdateAvatarUserService from "./UpdateAvatarUserService";
+import UpdateProfileService from "./UpdateProfileService";
 
 
 class UserServiceFactory implements IUserServiceFactory
@@ -43,6 +45,13 @@ class UserServiceFactory implements IUserServiceFactory
     }
     public GetSendForgotPasswordEmailService(): SendForgotPasswordEmailService {
         return new SendForgotPasswordEmailService(this.userRepository, this.tokenRepository);
+    }
+
+    public GetShowUserProfileService(): ShowUserProfileService {
+        return new ShowUserProfileService(this.userRepository);
+    }
+    public GetUpdateProfileService(): UpdateProfileService {
+        return new UpdateProfileService(this.userRepository);
     }
 }
 

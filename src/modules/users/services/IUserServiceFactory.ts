@@ -4,7 +4,9 @@ import CreateUserService from "./CreateUserService";
 import ListUserService from "./ListUserService";
 import ResetPasswordServices from "./ResetPasswordService";
 import SendForgotPasswordEmailService from "./SendForgotPasswordEmailService";
+import ShowUserProfileService from "./ShowUserProfileService";
 import UploadAvatarUserService from "./UpdateAvatarUserService";
+import UpdateProfileService from "./UpdateProfileService";
 
 export default interface IUserServiceFactory
 {
@@ -14,4 +16,6 @@ export default interface IUserServiceFactory
     GetUploadAvatarUserService(): UploadAvatarUserService;
     GetSendForgotPasswordEmailService(): SendForgotPasswordEmailService;
     GetResetPasswordService(): ResetPasswordServices;
+    GetShowUserProfileService(): ShowUserProfileService;
+    GetUpdateProfileService(): UpdateProfileService;
 }

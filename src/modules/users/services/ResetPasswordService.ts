@@ -47,5 +47,7 @@ export default class ResetPasswordServices
         }
 
         user.password = await hash(password, saltHash);
+
+        await this.userRepository.save(user);
     }
 }
