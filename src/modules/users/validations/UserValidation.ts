@@ -21,6 +21,14 @@ class UserRouterValidation
             }
         });
     }
+    public ForgotBodyIsValid()
+    {
+        return ({
+            [Segments.BODY]: {
+                email: Joi.string().email().required(),
+            }
+        });
+    }
 }
 
 export const userValidate = new UserRouterValidation();
