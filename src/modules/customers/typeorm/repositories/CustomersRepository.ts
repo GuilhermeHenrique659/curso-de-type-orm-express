@@ -1,8 +1,13 @@
-import { th } from "date-fns/locale";
 import { Repository } from "typeorm";
 import Customer from "../entities/customers";
-import ICustomersRepository from "./ICustomersRepository";
+import ICustomersRepository, { SeachParams } from "./ICustomersRepository";
 
+export interface ICustomerPaginate {
+    per_page: number;
+    total: number;
+    current_page: number;
+    data: Customer[];
+}
 
 export default class CustomersRepository implements ICustomersRepository
 {
@@ -40,9 +45,17 @@ export default class CustomersRepository implements ICustomersRepository
         return customer;
     }
 
-    public async findAll(): Promise<Customer[]> {
-        let customerList = await this.ormRepository.find();
-        return customerList;
+    public async findAll({ page, skip, take }: SeachParams): Promise<ICustomerPaginate> {
+        let [customers, count] = await this.ormRepository.createQueryBuilder().skip(skip).take(take).getManyAndCount()
+       
+        const result = {
+            per_page: take,
+            total: count,
+            current_page: page,
+            data: customers
+        }
+
+        return result;
     }
 
     public async save(customer:Customer): Promise<void> {

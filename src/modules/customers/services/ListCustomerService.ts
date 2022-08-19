@@ -1,5 +1,7 @@
 import Customer from "../typeorm/entities/customers";
+import { ICustomerPaginate } from "../typeorm/repositories/CustomersRepository";
 import ICustomersRepository from "../typeorm/repositories/ICustomersRepository";
+
 
 
 export default class ListCustomerService
@@ -10,9 +12,15 @@ export default class ListCustomerService
         this.customerRepository = customerRepository;
     }
 
-    public async execute(): Promise<Array<Customer>>
+    public async execute({page, limit}: {page:number, limit: number}): Promise<ICustomerPaginate>
     {
-        let customerList = await this.customerRepository.findAll();
+        const take = limit;
+        const skip = (Number(page)-1) * take
+        let customerList = await this.customerRepository.findAll({
+            page,
+            skip,
+            take
+        });
 
         return customerList;
     }

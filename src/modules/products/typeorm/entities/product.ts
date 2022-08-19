@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import Order from "@modules/orders/typeorm/entities/Order";
+import OrdersProducts from "@modules/orders/typeorm/entities/OrdersProducts";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 @Entity("products")
 export default class Product
@@ -8,6 +10,10 @@ export default class Product
 
     @Column()
     public name: string;
+
+
+    @OneToMany(() => OrdersProducts, orders_products => orders_products.product)
+    public order_products: Array<OrdersProducts> 
 
     @Column("decimal")
     public price: number;

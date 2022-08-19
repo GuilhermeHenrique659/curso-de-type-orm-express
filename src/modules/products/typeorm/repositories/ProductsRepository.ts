@@ -1,7 +1,10 @@
 import { connection } from "@shared/typeorm";
-import { Repository } from "typeorm"
-import { Product } from "../entities/product"
+import { In, Repository } from "typeorm"
+import Product  from "../entities/product"
 
+interface IRequest {
+    id: string;
+}
 
 export default class ProductRepository
 {
@@ -30,12 +33,31 @@ export default class ProductRepository
         })
         return product
     }
+    public async findAllByIds( products : Array<IRequest>): Promise< Array<Product> >
+    {
+        const productsIds = products.map(product => product.id);
+
+        const productsExists = await this.ormRepository.find({
+            where: {
+                id: In(productsIds)
+            }
+        })
+
+        return productsExists;
+    }
 
     public async save(product: Product): Promise<void>
     {
         await this.ormRepository.save(product);
 
     }
+
+    public async updateQuantity(products: { id: string, quantity: number}[]): Promise<void>
+    {
+
+        await this.ormRepository.save(products)
+    }
+
     public async findAll(): Promise<Array<Product> >{
         let listProduct = await this.ormRepository.find()
         return listProduct
