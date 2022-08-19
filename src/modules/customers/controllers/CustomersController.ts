@@ -7,9 +7,11 @@ export default class CustomerController
 {
     public async index(request: Request, response: Response): Promise<Response>
     {
+        const page = request.query.page ? Number(request.query.page) : 1;
+        const limit = request.query.limit ? Number(request.query.limit) : 10;
         let listCustomerService = customerServiceFactory.GetListCustomerService();
         
-        let listCustomer = await listCustomerService.execute();
+        let listCustomer = await listCustomerService.execute({page, limit});
 
         return response.json(listCustomer);
     }

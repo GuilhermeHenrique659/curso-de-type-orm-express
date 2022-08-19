@@ -1,5 +1,7 @@
-import { connection } from '@shared/typeorm';
 import 'reflect-metadata'
+import 'dotenv/config'
+
+import { connection } from '@shared/typeorm';
 import app from './app';
 
 connection.initialize().then( () => {
