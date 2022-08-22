@@ -3,12 +3,16 @@ import "reflect-metadata"
 import MockCustomersRepository from "../typeorm/repositories/mock/MockCustomerRepository";
 import CreateCustomerService from "./CreateCustomerService";
 
+let mockcustomerRepository: MockCustomersRepository
+let createCusomer: CreateCustomerService
+
+
 describe("CreateCustomer", () => {
+    beforeEach(() => {
+        mockcustomerRepository = new MockCustomersRepository();
+        createCusomer = new CreateCustomerService(mockcustomerRepository);
+    });
     it("should be able to create a new customer", async () => {
-        const mockcustomerRepository = new MockCustomersRepository();
-
-        const createCusomer = new CreateCustomerService(mockcustomerRepository);
-
         const customer = await createCusomer.execute({
             name: "guilherme",
             email: "guilherme@gmail.com"
@@ -17,10 +21,6 @@ describe("CreateCustomer", () => {
     });
 
     it("should not able to create two customer with the same email", async () => {
-        const mockcustomerRepository = new MockCustomersRepository();
-
-        const createCusomer = new CreateCustomerService(mockcustomerRepository);
-
         const customer = await createCusomer.execute({
             name: "guilherme",
             email: "guilherme@gmail.com"
