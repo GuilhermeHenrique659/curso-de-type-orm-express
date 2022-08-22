@@ -1,5 +1,6 @@
+import redisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
-import { Product } from "../typeorm/entities/product";
+import Product from "../typeorm/entities/product";
 import ProductRepository from "../typeorm/repositories/ProductsRepository";
 import { IRequestProducts } from "./IRequestProduct";
 
@@ -31,6 +32,8 @@ export default class UpdateProductService
         product.name = name;
         product.price = price;
         product.quantity = quantity;
+
+        await redisCache.invalidate("api-venv-PRODUCT_LIST");
 
         await this.productRepository.save(product)
 

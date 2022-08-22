@@ -1,4 +1,5 @@
-import { Product } from "../typeorm/entities/product";
+import redisCache from "@shared/cache/RedisCache";
+import Product from "../typeorm/entities/product";
 import ProductRepository from "../typeorm/repositories/ProductsRepository";
 
 export default class ListProductService
@@ -11,7 +12,13 @@ export default class ListProductService
     }
 
     public async execute(): Promise< Array<Product> >  {
-        let productsList = this.productRepository.findAll();
+        let productsList = await redisCache.recover< Array<Product> >("api-venv-PRODUCT_LIST");
+
+        if (!productsList){
+            productsList = await this.productRepository.findAll()
+
+            await redisCache.save("api-venv-PRODUCT_LIST", productsList);
+        }
         
         return productsList;
     }
