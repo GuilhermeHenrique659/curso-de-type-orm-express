@@ -1,4 +1,5 @@
 import { connection } from "@shared/typeorm";
+import bcryptprovider from "../providers/HashProvider/implementations/BcryptHashProvider";
 import User from "../typeorm/entities/users";
 import UserToken from "../typeorm/entities/userToken";
 import IUserRepository from "../typeorm/repositories/IUserRepository";
@@ -28,7 +29,7 @@ class UserServiceFactory implements IUserServiceFactory
     }
 
     public GetCreateUserService(): CreateUserService {
-        return new CreateUserService(this.userRepository);
+        return new CreateUserService(this.userRepository, bcryptprovider);
     }
 
     public GetListUserService(): ListUserService {

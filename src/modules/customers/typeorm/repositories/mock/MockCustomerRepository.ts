@@ -57,8 +57,13 @@ export default class MockCustomersRepository
     }
 
     public async save(customer: Customer): Promise<void> {
-        if(!customer.id) customer.id = uuidv4();
-        this.ormRepository.push(customer);
+        if(!customer.id) {
+            customer.id = uuidv4();
+            this.ormRepository.push(customer);
+        }
+        const findIndex = this.ormRepository.findIndex(findCustomer=> findCustomer.id === customer.id);
+        this.ormRepository[findIndex] = customer;
+
     }
 
     public async remove(customer: Customer): Promise<void> {

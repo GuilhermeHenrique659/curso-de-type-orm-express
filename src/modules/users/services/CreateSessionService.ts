@@ -1,10 +1,10 @@
 import AppError from "@shared/errors/AppError";
 import User from "../typeorm/entities/users";
 import IUserRepository from "../typeorm/repositories/IUserRepository";
-import { compare, hash } from "bcryptjs"
 import IResponseUser from "./IResponseUser";
-import { sign } from "jsonwebtoken"
+import { Secret, sign } from "jsonwebtoken"
 import authConfig from "@config/auth"
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
 interface IResquestUserSession
 {
@@ -15,9 +15,13 @@ interface IResquestUserSession
 export default class CreateSessionService
 {
     private repository: IUserRepository;
+    private hashprovider: IHashProvider;
 
-    constructor(repository: IUserRepository){
+
+    constructor(repository: IUserRepository, hashprovider:IHashProvider){
         this.repository = repository;
+        this.hashprovider = hashprovider
+
     }
 
     async execute({ email, password}: IResquestUserSession): Promise<IResponseUser>
@@ -28,15 +32,15 @@ export default class CreateSessionService
             throw new AppError("Email incorrect", 401);
         }
 
-        let passwordConfirm = await compare(password, user.password);
+        let passwordConfirm = await this.hashprovider.compareHash(password, user.password);
 
         if(!passwordConfirm){
             throw new AppError("Password incorrect", 401)
         }
 
-        const token = sign({}, authConfig.jwt.secret, {
+        const token = sign({}, authConfig.jwt.secret as Secret, {
             subject: user.id,
-            expiresIn: authConfig.jwt.expiresIn
+            expiresIn: authConfig.jwt.expiresIn,
         });
         
         return {
