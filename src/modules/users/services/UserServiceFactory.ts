@@ -36,7 +36,7 @@ class UserServiceFactory implements IUserServiceFactory
         return new ListUserService(this.userRepository);
     }
     public GetCreateSessionService(): CreateSessionService {
-        return new CreateSessionService(this.userRepository);
+        return new CreateSessionService(this.userRepository, bcryptprovider);
     }
     public GetUploadAvatarUserService(): UpdateAvatarUserService {
         return new UpdateAvatarUserService(this.userRepository);
