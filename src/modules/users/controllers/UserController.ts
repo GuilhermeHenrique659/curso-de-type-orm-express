@@ -14,7 +14,7 @@ export default class UserController
     public async create(request: Request, response: Response): Promise<Response>
     {
         let {name, email, password} = request.body;
-
+        
         let createUser = userServiceFactory.GetCreateUserService();
 
         let user = await createUser.execute({

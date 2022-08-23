@@ -46,11 +46,13 @@ export default class UserRepository implements IUserRepository
     }
     public async findByEmail(email: string): Promise<User | null>
     {
+        
         let user = await this.ormRepository.findOne({
                 where: {
                     email
                 }
         });
+        
         return user;
     }
 }
