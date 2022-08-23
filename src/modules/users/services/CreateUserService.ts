@@ -1,15 +1,17 @@
 import AppError from "@shared/errors/AppError";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import User from "../typeorm/entities/users";
 import IUserRepository from "../typeorm/repositories/IUserRepository";
 import IRequestUser from "./IResquestUser";
-import { hash } from "bcryptjs"
 
 export default class CreateUserService
 {
     private repository: IUserRepository;
+    private hashprovider: IHashProvider;
 
-    constructor(repository: IUserRepository){
+    constructor(repository: IUserRepository, hashprovider: IHashProvider){
         this.repository = repository;
+        this.hashprovider = hashprovider
     }
 
     async execute({name, email, password}: IRequestUser): Promise<User>
@@ -19,8 +21,7 @@ export default class CreateUserService
         if(emailExists){
             throw new AppError("Email already used.");
         }
-        const saltLeght = 8;
-        let hashedPassword:string = await hash(password, saltLeght);
+        let hashedPassword:string = await this.hashprovider.genenerateHash(password);
 
         let user = new User(
             name, 
